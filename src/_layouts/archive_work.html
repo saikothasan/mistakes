@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+{% assign layout = page.layout %}
+{% assign sorted_entries = site.work | sort: 'order' %}
+{% include page-intro.html %}
+
+<main id="main" class="page__main" aria-label="Main content">
+  {% include breadcrumbs.html %}
+  {% if page.introduction %}
+    {{ page.introduction | markdownify }}
+  {% elsif page.layout == 'autopage_tags' %}
+    {% if tag.description %}
+      {{ tag.description | markdownify }}
+    {% else %}
+      <p>An archive of posts tagged <em>{{ page.autopages.display_name }}</em>.</p>
+    {% endif %}
+  {% endif %}
+
+  {{ content }}
+
+  {% for post in sorted_entries %}
+    {% include entry.html %}
+  {% endfor %}
+</main>
